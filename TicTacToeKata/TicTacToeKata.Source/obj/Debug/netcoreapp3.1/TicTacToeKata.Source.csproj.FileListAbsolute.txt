@@ -1,0 +1,9 @@
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\bin\Debug\netcoreapp3.1\TicTacToeKata.Source.deps.json
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\bin\Debug\netcoreapp3.1\TicTacToeKata.Source.dll
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\bin\Debug\netcoreapp3.1\TicTacToeKata.Source.pdb
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.csprojAssemblyReference.cache
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.AssemblyInfoInputs.cache
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.AssemblyInfo.cs
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.csproj.CoreCompileInputs.cache
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.dll
+C:\Users\whitmor\source\repos\travelbug2020\tictactoe\TicTacToeKata\TicTacToeKata.Source\obj\Debug\netcoreapp3.1\TicTacToeKata.Source.pdb
