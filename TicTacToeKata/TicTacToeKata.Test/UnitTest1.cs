@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using TicTacToeKata.Source;
 
@@ -5,9 +7,11 @@ namespace TicTacToeKata.Test
 {
     public class TicTacToeKataShould
     {
+// private TicTacToe ticTacToe;
         [SetUp]
         public void Setup()
         {
+            //ticTacToe = new TicTacToe();
         }
 
         [Test]
@@ -15,19 +19,9 @@ namespace TicTacToeKata.Test
         {
             var ticTacToe = new TicTacToe();
 
-            var result = ticTacToe.GetCurrentPlayer("FirstPlayer");
-            
-            Assert.AreEqual('X',result);
-        } 
+            var result = ticTacToe.GetCurrentPlayer();
 
-        [Test]
-        public void ReturnO_AsSecondPlayer()
-        {
-            var ticTacToe = new TicTacToe();
-
-            var result = ticTacToe.GetCurrentPlayer("SecondPlayer");
-
-            Assert.AreEqual('O',result);
+            Assert.AreEqual('X', result);
         }
 
         [Test]
@@ -35,19 +29,39 @@ namespace TicTacToeKata.Test
         {
             var ticTacToe = new TicTacToe();
 
-            var result = ticTacToe.MarkAtPosition(1);
+            var result = ticTacToe.MarkAtPosition(new List<int>() {1});
 
-            Assert.AreEqual('X', result);
+            Assert.AreEqual(new Dictionary<int, char> {{1, 'X'}}, result);
         }
 
         [Test]
-        public void Player_MarkO_AtPosition2()
+        public void Player_MarkLetters_AtPosition()
         {
             var ticTacToe = new TicTacToe();
 
-            var result = ticTacToe.MarkAtPosition(2);
+            var result = ticTacToe.MarkAtPosition(new List<int> { 1, 2 });
 
-            Assert.AreEqual('O', result);
+            CollectionAssert.AreEqual(new Dictionary<int, char> { { 1, 'X' }, { 2, 'O' } }, result);
         }
+
+        [Test]
+        public void Game_ThrowError_IfPositionIsAlreadyPlayed()
+        {
+            var ticTacToe = new TicTacToe();
+
+            Assert.Throws<CanNotPlayPositionAlreadyPlayed>(() => { ticTacToe.MarkAtPosition(new List<int> {1, 1}); });
+        }
+
+        [Test]
+        public void PlayerWins_IfThreeInARow()
+        {
+            var ticTacToe = new TicTacToe();
+
+            var result = ticTacToe.MarkAtPosition(new List<int>{1, 4, 2, 5, 3});
+
+            Assert.AreEqual("X wins!", result);
+        }
+        
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.VisualBasic;
 
 namespace TicTacToeKata.Source
 {
@@ -12,25 +14,68 @@ namespace TicTacToeKata.Source
             {"SecondPlayer", 'O'}
         };
 
-        Dictionary<int, char> positionToLetter = new Dictionary<int, char>();
+        private Dictionary<int, char> positionToLetter = new Dictionary<int, char>();
+        
+        bool firstPlayerTurn = true;
+        bool secondPlayerTurn = false;
 
-        public char GetCurrentPlayer(string player)
+        public char GetCurrentPlayer()
         {
+            string player = String.Empty;
+            if (firstPlayerTurn)
+            {
+                firstPlayerTurn = false;
+                secondPlayerTurn = true;
+                player = "FirstPlayer";
+            }
+            else if (secondPlayerTurn)
+            {
+                secondPlayerTurn = false;
+                firstPlayerTurn = true;
+                player = "SecondPlayer";
+            }
+
             return playerToLetter[player];
         }
 
-        public char MarkAtPosition(int position)
+        public Dictionary<int,char> MarkAtPosition(List<int> position)
         {
-            char letter;
-            if (position == 2)
+             
+            foreach (var pos in position)
             {
-                 letter = GetCurrentPlayer("SecondPlayer");
-                positionToLetter.Add(position, letter);
-                return positionToLetter[position];
+                char letter;
+                letter = GetCurrentPlayer();
+                try
+                {
+                    positionToLetter.Add(pos, letter);
+                    GetWinner(letter);
+                }
+                catch (ArgumentException)
+                {
+                    throw new CanNotPlayPositionAlreadyPlayed();
+                }
+
             }
-            letter = GetCurrentPlayer("FirstPlayer");
-            positionToLetter.Add(position, letter);
-            return positionToLetter[position];
+
+            return positionToLetter;
+
         }
+
+        public string GetWinner(char letter)
+        {
+            if (positionToLetter.ContainsKey(1) && positionToLetter.ContainsKey(2) && positionToLetter.ContainsKey(3))
+            {
+                if (positionToLetter[1] == letter && positionToLetter[2] == letter && positionToLetter[3] == letter)
+                {
+                    return $"{letter} wins!";
+                }
+            }
+            string winner = String.Empty;
+            
+
+            return null;
+        }
+
+        
     }
 }
