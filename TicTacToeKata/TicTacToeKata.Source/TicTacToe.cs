@@ -62,14 +62,14 @@ namespace TicTacToeKata.Source
              
             foreach (var pos in position)
             {
-                var letter = GetCurrentPlayer();
+                var NoughtOrCross = GetCurrentPlayer();
                 try
                 {
-                    _positionToLetter.Add(pos, letter);
-                    var winner = CheckIfThereIsAWinner(letter);
+                    _positionToLetter.Add(pos, NoughtOrCross);
+                    var winner = CheckIfThereIsAWinner(NoughtOrCross);
                     if (winner)
                     {
-                        return $"{letter} wins!";
+                        return $"{NoughtOrCross} wins!";
                     }
                 }
                 catch (ArgumentException)
