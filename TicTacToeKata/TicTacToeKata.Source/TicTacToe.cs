@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
 
@@ -8,47 +9,68 @@ namespace TicTacToeKata.Source
 {
     public class TicTacToe
     {
-        Dictionary<string, char> playerToLetter = new Dictionary<string, char>
+        readonly Dictionary<string, char> _playerToLetter = new Dictionary<string, char>
         {
             {"FirstPlayer", 'X'},
             {"SecondPlayer", 'O'}
         };
 
-        private Dictionary<int, char> positionToLetter = new Dictionary<int, char>();
+        private readonly Dictionary<int, char> _positionToLetter = new Dictionary<int, char>();
         
-        bool firstPlayerTurn = true;
-        bool secondPlayerTurn = false;
+        bool _firstPlayerTurn = true;
+        bool _secondPlayerTurn = false;
+
+        readonly List<int[]> _listOfWinningPositions = new List<int[]>
+        {
+            new [] {1,2,3},
+            new [] {4,5,6},
+            new [] {7,8,9},
+            new [] {1,4,7},
+            new [] {2,5,8},
+            new [] {3,6,9},
+            new [] {1,5,9},
+            new [] {3,5,7}
+
+        };
 
         public char GetCurrentPlayer()
         {
             string player = String.Empty;
-            if (firstPlayerTurn)
+            if (_firstPlayerTurn)
             {
-                firstPlayerTurn = false;
-                secondPlayerTurn = true;
+                _firstPlayerTurn = false;
+                _secondPlayerTurn = true;
                 player = "FirstPlayer";
             }
-            else if (secondPlayerTurn)
+            else if (_secondPlayerTurn)
             {
-                secondPlayerTurn = false;
-                firstPlayerTurn = true;
+                _secondPlayerTurn = false;
+                _firstPlayerTurn = true;
                 player = "SecondPlayer";
             }
 
-            return playerToLetter[player];
+            return _playerToLetter[player];
         }
 
-        public Dictionary<int,char> MarkAtPosition(List<int> position)
+
+        public string MarkAtPosition(int[] position)
         {
+            if (position.Length > 9)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
              
             foreach (var pos in position)
             {
-                char letter;
-                letter = GetCurrentPlayer();
+                var letter = GetCurrentPlayer();
                 try
                 {
-                    positionToLetter.Add(pos, letter);
-                    GetWinner(letter);
+                    _positionToLetter.Add(pos, letter);
+                    var winner = CheckIfThereIsAWinner(letter);
+                    if (winner)
+                    {
+                        return $"{letter} wins!";
+                    }
                 }
                 catch (ArgumentException)
                 {
@@ -57,25 +79,30 @@ namespace TicTacToeKata.Source
 
             }
 
-            return positionToLetter;
+            return "DRAW";
 
         }
 
-        public string GetWinner(char letter)
+        public bool CheckIfThereIsAWinner(char letter)
         {
-            if (positionToLetter.ContainsKey(1) && positionToLetter.ContainsKey(2) && positionToLetter.ContainsKey(3))
+
+            foreach (var positionArray in _listOfWinningPositions)
             {
-                if (positionToLetter[1] == letter && positionToLetter[2] == letter && positionToLetter[3] == letter)
+                var firstKeyToCheck = positionArray[0];
+                var secondKeyToCheck = positionArray[1];
+                var thirdKeyToCheck = positionArray[2];
+
+                if (_positionToLetter.ContainsKey(firstKeyToCheck) && _positionToLetter.ContainsKey(secondKeyToCheck) && _positionToLetter.ContainsKey(thirdKeyToCheck))
                 {
-                    return $"{letter} wins!";
+                    if (_positionToLetter[firstKeyToCheck] == letter && _positionToLetter[secondKeyToCheck] == letter && _positionToLetter[thirdKeyToCheck] == letter)
+                    {
+                        return true;
+                    }
                 }
             }
-            string winner = String.Empty;
-            
 
-            return null;
+            return false;
         }
 
-        
     }
 }
