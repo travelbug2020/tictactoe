@@ -19,6 +19,7 @@ namespace TicTacToeKata.Source
         
         bool _firstPlayerTurn = true;
         bool _secondPlayerTurn = false;
+        private string _player = "FirstPlayer";
 
         readonly List<int[]> _listOfWinningPositions = new List<int[]>
         {
@@ -35,55 +36,68 @@ namespace TicTacToeKata.Source
 
         public char GetCurrentPlayer()
         {
-            string player = String.Empty;
-            if (_firstPlayerTurn)
-            {
-                _firstPlayerTurn = false;
-                _secondPlayerTurn = true;
-                player = "FirstPlayer";
-            }
-            else if (_secondPlayerTurn)
-            {
-                _secondPlayerTurn = false;
-                _firstPlayerTurn = true;
-                player = "SecondPlayer";
-            }
-
-            return _playerToLetter[player];
+            return _playerToLetter[_player];
         }
 
 
-        public string MarkAtPosition(int[] position)
+        public string MarkAtPositions(int[] position)
         {
             if (position.Length > 9)
             {
                 throw new ArgumentOutOfRangeException();
             }
-             
+
             foreach (var pos in position)
             {
-                var NoughtOrCross = GetCurrentPlayer();
-                try
-                {
-                    _positionToLetter.Add(pos, NoughtOrCross);
-                    var winner = CheckIfThereIsAWinner(NoughtOrCross);
-                    if (winner)
-                    {
-                        return $"{NoughtOrCross} wins!";
-                    }
-                }
-                catch (ArgumentException)
-                {
-                    throw new CanNotPlayPositionAlreadyPlayed();
-                }
-
+                if (MarkAtPosition(pos, out var winner)) 
+                    return winner;
             }
 
             return "DRAW";
 
         }
 
-        public bool CheckIfThereIsAWinner(char letter)
+        private bool MarkAtPosition(int pos, out string s)
+        {
+            var noughtOrCross = GetCurrentPlayer();
+            try
+            {
+                _positionToLetter.Add(pos, noughtOrCross);
+                if (ThereIsAWinner(noughtOrCross))
+                {
+                    {
+                        s = $"{noughtOrCross} wins!";
+                        return true;
+                    }
+                }
+
+                SwapPlayers();
+            }
+            catch (ArgumentException)
+            {
+                throw new CanNotPlayPositionAlreadyPlayed();
+            }
+
+            return false;
+        }
+
+        private void SwapPlayers()
+        {
+            if (_firstPlayerTurn)
+            {
+                _firstPlayerTurn = false;
+                _secondPlayerTurn = true;
+                _player = "FirstPlayer";
+            }
+            else if (_secondPlayerTurn)
+            {
+                _secondPlayerTurn = false;
+                _firstPlayerTurn = true;
+                _player = "SecondPlayer";
+            }
+        }
+
+        public bool ThereIsAWinner(char noughtOrCross)
         {
 
             foreach (var positionArray in _listOfWinningPositions)
@@ -94,7 +108,7 @@ namespace TicTacToeKata.Source
 
                 if (_positionToLetter.ContainsKey(firstKeyToCheck) && _positionToLetter.ContainsKey(secondKeyToCheck) && _positionToLetter.ContainsKey(thirdKeyToCheck))
                 {
-                    if (_positionToLetter[firstKeyToCheck] == letter && _positionToLetter[secondKeyToCheck] == letter && _positionToLetter[thirdKeyToCheck] == letter)
+                    if (_positionToLetter[firstKeyToCheck] == noughtOrCross && _positionToLetter[secondKeyToCheck] == noughtOrCross && _positionToLetter[thirdKeyToCheck] == noughtOrCross)
                     {
                         return true;
                     }

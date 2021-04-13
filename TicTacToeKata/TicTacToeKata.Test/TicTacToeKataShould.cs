@@ -26,8 +26,9 @@ namespace TicTacToeKata.Test
         [Test]
         public void Game_ThrowError_IfPositionIsAlreadyPlayed()
         {
-            Assert.Throws<CanNotPlayPositionAlreadyPlayed>(() => { ticTacToe.MarkAtPosition(new [] {1, 1}); });
+            Assert.Throws<CanNotPlayPositionAlreadyPlayed>(() => { ticTacToe.MarkAtPositions(new [] {1, 1}); });
         }
+
         [TestCase(new[]{1, 4, 2, 5, 3},"X wins!")]
         [TestCase(new[]{7, 4, 3, 5, 1,6},"O wins!")]
         [TestCase(new[]{7, 1, 8, 5, 3,6,9,4},"X wins!")]
@@ -38,7 +39,7 @@ namespace TicTacToeKata.Test
         [TestCase(new[]{3, 1, 5, 9, 7},"X wins!")]
         public void PlayerWins_IfThreeInARow(int[] positions, string nameOfWinner)
         {
-            var result = ticTacToe.MarkAtPosition(positions);
+            var result = ticTacToe.MarkAtPositions(positions);
 
             Assert.AreEqual(nameOfWinner, result);
         }
@@ -46,7 +47,7 @@ namespace TicTacToeKata.Test
         [TestCase(new[] { 1, 2, 3, 5, 8,7,4,9,6 }, "DRAW")]
         public void PlayerTie_IfAllSquaresFilled_ButNoWinner(int[] positions, string nameOfWinner)
         {
-            var result = ticTacToe.MarkAtPosition(positions);
+            var result = ticTacToe.MarkAtPositions(positions);
 
             Assert.AreEqual(nameOfWinner, result);
         }
@@ -56,7 +57,7 @@ namespace TicTacToeKata.Test
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                ticTacToe.MarkAtPosition(new[] {1, 2, 3, 5, 8, 7, 4, 9, 6, 10});
+                ticTacToe.MarkAtPositions(new[] {1, 2, 3, 5, 8, 7, 4, 9, 6, 10});
             });
         }
 
