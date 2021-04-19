@@ -15,13 +15,6 @@ namespace TicTacToeKata.Test
             ticTacToe = new TicTacToe();
         }
 
-        //[Test]
-        //public void ReturnX_AsFirstPlayer()
-        //{
-        //    var result = ticTacToe.GetCurrentPlayer();
-
-        //    Assert.AreEqual('X', result);
-        //}
         
         [Test]
         public void ReturnX_AsFirstPlayer()
