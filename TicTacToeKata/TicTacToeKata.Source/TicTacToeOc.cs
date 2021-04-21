@@ -1,9 +1,11 @@
-﻿using static TicTacToeKata.Source.Player;
+﻿using System.Collections.Generic;
+using static TicTacToeKata.Source.Player;
 
 namespace TicTacToeKata.Source
 {
     public class TicTacToeOc
     {
+        private Board board = new Board();
         private Player currentPlayer = X;
         public Player GetCurrentPlayer()
         {
@@ -12,6 +14,7 @@ namespace TicTacToeKata.Source
 
         public void MarkPosition(Position position)
         {
+            
             SwapPlayers();
         }
 
@@ -31,4 +34,6 @@ namespace TicTacToeKata.Source
             return X;
         }
     }
+
+    
 }
