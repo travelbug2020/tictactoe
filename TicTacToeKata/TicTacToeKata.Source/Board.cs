@@ -6,7 +6,7 @@ namespace TicTacToeKata.Source
 {
     class Board
     {
-        private Dictionary<Player,Position> board;
+        public Dictionary<Player,Position> board;
     }
 
 }
